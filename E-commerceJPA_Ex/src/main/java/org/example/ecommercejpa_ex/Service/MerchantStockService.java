@@ -106,30 +106,7 @@ public class MerchantStockService {
         return 1;
     }
 
-    // 4. Total Inventory Value
-    public Double getTotalInventoryValue(Integer merchantId) {
-        List<MerchantStock> allStocks = merchantStockRepository.findAll();
-        List<org.example.ecommercejpa_ex.Model.Product> allProducts = productRepository.findAll();
 
-        double totalValue = 0;
-        boolean merchantHasStock = false;
-
-        for (int i = 0; i < allStocks.size(); i++) {
-            MerchantStock s = allStocks.get(i);
-            if (s.getMerchantId().equals(merchantId)) {
-                merchantHasStock = true;
-
-
-                for (int j = 0; j < allProducts.size(); j++) {
-                    if (allProducts.get(j).getId().equals(s.getProductId())) {
-                        totalValue += (allProducts.get(j).getPrice() * s.getStock());
-                        break;
-                    }
-                }
-            }
-        }
-        return merchantHasStock ? totalValue : null;
-    }
 }
 
 
