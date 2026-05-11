@@ -48,17 +48,17 @@ public class UserService {
             userRepository.delete(user);
             return true;
         }
-    // Get Users by Role باستخدام الفور العادية
+    // Get Users by Role 
     public List<User> getUsersByRole(String role) {
-        // 1. نجلب كل المستخدمين من قاعدة البيانات
+
         List<User> allUsers = userRepository.findAll();
 
-        // 2. ننشئ قائمة جديدة لتخزين المستخدمين المطابقين للرول
+
         List<User> filteredUsers = new ArrayList<>();
 
-        // 3. نمر على القائمة كاملة باستخدام الفور التقليدية
+
         for (int i = 0; i < allUsers.size(); i++) {
-            // نتحقق إذا كان الرول مطابق (بدون التحسس لحالة الأحرف)
+
             if (allUsers.get(i).getRole().equalsIgnoreCase(role)) {
                 filteredUsers.add(allUsers.get(i));
             }
@@ -103,7 +103,7 @@ public class UserService {
         if (currentStock.getStock() <= 0) return -4;
         if (currentUser.getBalance() < currentProduct.getPrice()) return -5;
 
-        // تحديث البيانات
+
         currentUser.setBalance(currentUser.getBalance() - currentProduct.getPrice());
         currentUser.setTotalSpent(currentUser.getTotalSpent() + currentProduct.getPrice());
         currentStock.setStock(currentStock.getStock() - 1);
