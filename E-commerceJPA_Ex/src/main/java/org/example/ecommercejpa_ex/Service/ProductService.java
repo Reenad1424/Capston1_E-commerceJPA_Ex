@@ -20,7 +20,7 @@ public class ProductService {
         }
 
         public int add(Product product) {
-            // التحقق من وجود الكاتيجوري في قاعدة البيانات
+
             boolean categoryExists = categoryRepository.existsById(product.getCategoryId());
 
             if (categoryExists) {
@@ -34,7 +34,7 @@ public class ProductService {
             Product oldProduct = productRepository.findById(id).orElse(null);
             if (oldProduct == null) return false;
 
-            // التأكد أن الكاتيجوري الجديد موجود
+
             if (!categoryRepository.existsById(product.getCategoryId())) return false;
 
             oldProduct.setName(product.getName());
@@ -53,12 +53,12 @@ public class ProductService {
             return true;
         }
 
-        // 1. Get by Category Name (البحث بالاسم ثم جلب المنتجات التابعة له)
+        // 1. Get by Category Name 
         public List<Product> getByCategoryName(String categoryName) {
             List<Category> categories = categoryRepository.findAll();
             Integer foundCategoryId = null;
 
-            // فور عادية للبحث عن الـ ID الخاص بالاسم
+
             for (int i = 0; i < categories.size(); i++) {
                 if (categories.get(i).getName().equalsIgnoreCase(categoryName)) {
                     foundCategoryId = categories.get(i).getId();
@@ -70,7 +70,7 @@ public class ProductService {
             List<Product> allProducts = productRepository.findAll();
             List<Product> filteredProducts = new ArrayList<>();
 
-            // فور عادية لفلترة المنتجات حسب الـ Category ID
+
             for (int i = 0; i < allProducts.size(); i++) {
                 if (allProducts.get(i).getCategoryId().equals(foundCategoryId)) {
                     filteredProducts.add(allProducts.get(i));
@@ -79,12 +79,12 @@ public class ProductService {
             return filteredProducts;
         }
 
-        // 2. Get Cheapest Products (الفلترة ثم الترتيب الفقاعي Bubble Sort)
+        // 2. Get Cheapest Products (Bubble Sort)
         public List<Product> getCheapestProducts(String categoryName) {
             List<Product> filteredProducts = getByCategoryName(categoryName);
             if (filteredProducts == null || filteredProducts.isEmpty()) return null;
 
-            // Bubble Sort ترتيب من الأرخص للأغلى
+            // Bubble Sort  
             for (int i = 0; i < filteredProducts.size() - 1; i++) {
                 for (int j = 0; j < filteredProducts.size() - i - 1; j++) {
                     if (filteredProducts.get(j).getPrice() > filteredProducts.get(j + 1).getPrice()) {
@@ -97,12 +97,12 @@ public class ProductService {
             return filteredProducts;
         }
 
-        // 3. Get Most Expensive Products (ترتيب من الأغلى للأرخص)
+        // 3. Get Most Expensive Products 
         public List<Product> getMostExpensiveProducts(String categoryName) {
             List<Product> filteredProducts = getByCategoryName(categoryName);
             if (filteredProducts == null || filteredProducts.isEmpty()) return null;
 
-            // Bubble Sort ترتيب من الأغلى للأرخص
+            // Bubble Sort 
             for (int i = 0; i < filteredProducts.size() - 1; i++) {
                 for (int j = 0; j < filteredProducts.size() - i - 1; j++) {
                     if (filteredProducts.get(j).getPrice() < filteredProducts.get(j + 1).getPrice()) {
