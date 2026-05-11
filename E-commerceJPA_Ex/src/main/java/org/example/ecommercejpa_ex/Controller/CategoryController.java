@@ -27,7 +27,7 @@ public class CategoryController {
         if(errors.hasErrors()){
             return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
         }
-        // في الـ JPA الإضافة لا تحتاج التحقق من الـ ID لأنه تلقائي
+
         categoryService.add(category);
         return ResponseEntity.status(200).body(new ApiResponse("Category added successfully"));
     }
@@ -37,7 +37,7 @@ public class CategoryController {
         if(errors.hasErrors())
             return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
 
-        // لاحظ تغيير نوع الـ id إلى Integer
+
         if(categoryService.update(id, category))
             return ResponseEntity.status(200).body(new ApiResponse("Category Updated successfully"));
 
