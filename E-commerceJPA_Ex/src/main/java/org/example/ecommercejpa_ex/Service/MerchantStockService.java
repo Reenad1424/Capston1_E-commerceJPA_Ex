@@ -23,7 +23,7 @@ public class MerchantStockService {
         }
 
         public int add(MerchantStock merchantStock) {
-            // التحقق من وجود المنتج والتاجر في قاعدة البيانات
+
             boolean productExists = productRepository.existsById(merchantStock.getProductId());
             boolean merchantExists = merchantRepository.existsById(merchantStock.getMerchantId());
 
@@ -65,10 +65,10 @@ public class MerchantStockService {
                 return 1;
             }
         }
-        return 0; // لم يتم العثور على سجل المخزون
+        return 0     ;
     }
 
-    // 2. Get Low Stock (الفلترة اليدوية للمنتجات التي مخزونها 10 أو أقل)
+    // 2. Get Low Stock 
     public List<MerchantStock> getLowStock() {
         List<MerchantStock> allStocks = merchantStockRepository.findAll();
         List<MerchantStock> lowStocks = new ArrayList<>();
@@ -81,7 +81,7 @@ public class MerchantStockService {
         return lowStocks;
     }
 
-    // 3. Transfer Stock (نقل المخزون بين تاجرين باستخدام الفور العادية)
+    // 3. Transfer Stock 
     public int transferStock(Integer fromMId, Integer toMId, Integer pId, int amount) {
         List<MerchantStock> stocks = merchantStockRepository.findAll();
         MerchantStock fromS = null;
@@ -106,7 +106,7 @@ public class MerchantStockService {
         return 1;
     }
 
-    // 4. Total Inventory Value (حساب القيمة الإجمالية بالفور العادية)
+    // 4. Total Inventory Value
     public Double getTotalInventoryValue(Integer merchantId) {
         List<MerchantStock> allStocks = merchantStockRepository.findAll();
         List<org.example.ecommercejpa_ex.Model.Product> allProducts = productRepository.findAll();
@@ -119,7 +119,7 @@ public class MerchantStockService {
             if (s.getMerchantId().equals(merchantId)) {
                 merchantHasStock = true;
 
-                // بحث يدوي عن سعر المنتج المرتبط بهذا الستوك
+
                 for (int j = 0; j < allProducts.size(); j++) {
                     if (allProducts.get(j).getId().equals(s.getProductId())) {
                         totalValue += (allProducts.get(j).getPrice() * s.getStock());
